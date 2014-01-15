@@ -4,7 +4,7 @@ describe Viagogo do
 
   describe "::VERSION" do
     it "should have a value" do
-      Viagogo::VERSION.should_not be_nil
+      expect(Viagogo::VERSION).not_to be_nil
     end
   end
 end

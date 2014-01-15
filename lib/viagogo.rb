@@ -1,5 +1,2 @@
-require "viagogo/version"
-
-module Viagogo
-  # Your code goes here...
-end
+require 'viagogo/client'
+require 'viagogo/version'
