@@ -1,3 +1,4 @@
+require 'faraday'
 require 'viagogo/error/configuration_error'
 require 'viagogo/version'
 
@@ -12,6 +13,8 @@ module Viagogo
                   :consumer_key,
                   :consumer_secret,
                   :scope
+
+    API_ENDPOINT = "https://api.viagogo.net".freeze
 
     # Initializes a new Client
     #
@@ -48,7 +51,48 @@ module Viagogo
       @user_agent ||= "viagogo Ruby Gem #{Viagogo::VERSION}"
     end
 
+    # Perform an HTTP HEAD request
+    def delete(path, params = {})
+      request(:delete, path, params)
+    end
+
+    # Perform an HTTP GET request
+    def get(path, params = {})
+      request(:get, path, params)
+    end
+
+    # Perform an HTTP HEAD request
+    def head(path, params = {})
+      request(:head, path, params)
+    end
+
+    # Perform an HTTP POST request
+    def post(path, params = {})
+      request(:post, path, params)
+    end
+
+    # Perform an HTTP PUT request
+    def put(path, params = {})
+      request(:put, path, params)
+    end
+
     private
+
+    # Returns a Faraday::Connection object
+    #
+    # @return [Faraday::Connection]
+    def connection
+      @client ||= Faraday.new(:url => API_ENDPOINT)
+    end
+
+
+    # Perform an HTTP request
+    #
+    # @return [Hash] object containing response information
+    def request(method, path, params = {}, signature_params = params)
+      response = connection.send(method.to_sym, path, params)
+      response.env
+    end
 
     # Ensures that all credentials set during configuration are of a
     # valid type. Valid types are String and Symbol.

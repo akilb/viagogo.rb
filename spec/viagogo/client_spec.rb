@@ -76,7 +76,7 @@ describe Viagogo::Client do
           actual_client = config
         end
 
-        expect(actual_client).to equal(expected_client)
+        expect(actual_client.object_id).to equal(expected_client.object_id)
       end
 
       it "raises Viagogo::Error::ConfigurationError when :consumer_key is invalid" do
@@ -154,6 +154,85 @@ describe Viagogo::Client do
                                    :access_token => "AT",
                                    :access_token_secret => "AS")
       expect(client.credentials?).to be_true
+    end
+  end
+
+  describe "#connection" do
+    it "looks like a Faraday connection" do
+      expect(@client.send(:connection)).to respond_to(:run_request)
+    end
+
+    it "caches the connection" do
+      connection1, connection2 = @client.send(:connection), @client.send(:connection)
+      expect(connection1.object_id).to eq(connection2.object_id)
+    end
+  end
+
+  describe "#request" do
+    it "makes an HTTP request with the parameters given" do
+      expected_path = "/some/path"
+      [:get, :post, :head, :put, :delete].each do |expected_method|
+        stub_request(:any, Viagogo::Client::API_ENDPOINT + expected_path)
+        @client.send(:request, expected_method, expected_path)
+        expect(a_request(expected_method, Viagogo::Client::API_ENDPOINT + expected_path)).to have_been_made
+      end
+    end
+
+    it "returns the response env Hash" do
+      expected_response_hash = {:body => "abc"}
+      stub_request(:any, Viagogo::Client::API_ENDPOINT + "/foo").to_return(expected_response_hash)
+      actual_response_hash = @client.send(:request, :get, "/foo")
+      expect(actual_response_hash[:body]).to eq(expected_response_hash[:body])
+    end
+  end
+
+  describe "#get" do
+    it "performs an get request" do
+      expected_path = "/custom/path"
+      expected_params = {:foo => "foo", :bar => "bar"}
+      stub_get(expected_path).with(:query => expected_params)
+      @client.get(expected_path, expected_params)
+      expect(a_get(expected_path).with(:query => expected_params)).to have_been_made
+    end
+  end
+
+  describe "#head" do
+    it "performs an head request" do
+      expected_path = "/custom/path"
+      expected_params = {:foo => "foo", :bar => "bar"}
+      stub_head(expected_path).with(:query => expected_params)
+      @client.head(expected_path, expected_params)
+      expect(a_head(expected_path).with(:query => expected_params)).to have_been_made
+    end
+  end
+
+  describe "#delete" do
+    it "performs an delete request" do
+      expected_path = "/custom/path"
+      expected_params = {:foo => "foo", :bar => "bar"}
+      stub_delete(expected_path).with(:query => expected_params)
+      @client.delete(expected_path, expected_params)
+      expect(a_delete(expected_path).with(:query => expected_params)).to have_been_made
+    end
+  end
+
+  describe "#post" do
+    it "performs an post request" do
+      expected_path = "/custom/path"
+      expected_body = {:foo => "foo", :bar => "bar"}
+      stub_post(expected_path).with(:body => expected_body)
+      @client.post(expected_path, expected_body)
+      expect(a_post(expected_path).with(:body => expected_body)).to have_been_made
+    end
+  end
+
+  describe "#put" do
+    it "performs an put request" do
+      expected_path = "/custom/path"
+      expected_body = {:foo => "foo", :bar => "bar"}
+      stub_put(expected_path).with(:body => expected_body)
+      @client.put(expected_path, expected_body)
+      expect(a_put(expected_path).with(:body => expected_body)).to have_been_made
     end
   end
 end
