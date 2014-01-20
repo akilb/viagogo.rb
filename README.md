@@ -1,6 +1,6 @@
 # Viagogo
 
-Ruby toolkit for working with the GitHub API
+Ruby toolkit for working with the viagogo API
 
 ## Installation
 
