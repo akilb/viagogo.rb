@@ -168,6 +168,17 @@ describe Viagogo::Client do
     end
   end
 
+  describe "#middleware" do
+    it "is a Faraday builder" do
+      expect(@client.middleware).to be_an_instance_of(Faraday::Builder)
+    end
+
+    it "caches the middleware" do
+      middleware1, middleware2 = @client.middleware, @client.middleware
+      expect(middleware1.object_id).to eq(middleware2.object_id)
+    end
+  end
+
   describe "#request" do
     it "makes an HTTP request with the parameters given" do
       expected_path = "/some/path"
@@ -183,6 +194,17 @@ describe Viagogo::Client do
       stub_request(:any, Viagogo::Client::API_ENDPOINT + "/foo").to_return(expected_response_hash)
       actual_response_hash = @client.send(:request, :get, "/foo")
       expect(actual_response_hash[:body]).to eq(expected_response_hash[:body])
+    end
+
+    context "when Client has no access token" do
+      it "makes public_access_token request before making actual HTTP request" do
+        client = Viagogo::Client.new(:consumer_key => 'CK', :consumer_secret => 'CS')
+        allow(client).to receive(:public_access_token).and_return("token") #TODO: What type should this return?
+        stub_request(:any, Viagogo::Client::API_ENDPOINT + "/foo")
+        client.send(:request, :get, "/foo")
+        expect(client).to have_received(:public_access_token).once
+
+      end
     end
   end
 
