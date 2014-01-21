@@ -180,20 +180,22 @@ describe Viagogo::Client do
   end
 
   describe "#request" do
-    it "makes an HTTP request with the parameters given" do
-      expected_path = "/some/path"
-      [:get, :post, :head, :put, :delete].each do |expected_method|
-        stub_request(:any, Viagogo::Client::API_ENDPOINT + expected_path)
-        @client.send(:request, expected_method, expected_path)
-        expect(a_request(expected_method, Viagogo::Client::API_ENDPOINT + expected_path)).to have_been_made
-      end
-    end
+    [:get, :post, :head, :put, :delete, :patch].each do |method|
+      context "when HTTP method is #{method}" do
+        it "makes an HTTP request with the parameters given" do
+          expected_path = "/some/path"
+          stub_request(:any, Viagogo::Client::API_ENDPOINT + expected_path)
+          @client.send(:request, method, expected_path)
+          expect(a_request(method, Viagogo::Client::API_ENDPOINT + expected_path)).to have_been_made
+        end
 
-    it "returns the response env Hash" do
-      expected_response_hash = {:body => "abc"}
-      stub_request(:any, Viagogo::Client::API_ENDPOINT + "/foo").to_return(expected_response_hash)
-      actual_response_hash = @client.send(:request, :get, "/foo")
-      expect(actual_response_hash[:body]).to eq(expected_response_hash[:body])
+        it "returns the response env Hash" do
+          expected_response_hash = {:body => "abc"}
+          stub_request(:any, Viagogo::Client::API_ENDPOINT + "/foo").to_return(expected_response_hash)
+          actual_response_hash = @client.send(:request, method, "/foo")
+          expect(actual_response_hash[:body]).to eq(expected_response_hash[:body])
+        end
+      end
     end
 
     context "when Client has no access token" do
@@ -203,7 +205,6 @@ describe Viagogo::Client do
         stub_request(:any, Viagogo::Client::API_ENDPOINT + "/foo")
         client.send(:request, :get, "/foo")
         expect(client).to have_received(:public_access_token).once
-
       end
     end
   end
