@@ -47,23 +47,23 @@ describe Viagogo::Client do
       end
 
       it "raises Viagogo::Error::ConfigurationError when :consumer_key is invalid" do
-        expect { Viagogo::Client.new(:consumer_key => [50, 1]) }.to raise_error Viagogo::Error::ConfigurationError
+        expect { Viagogo::Client.new(:consumer_key => [50, 1]) }.to raise_error Viagogo::ConfigurationError
       end
 
       it "raises Viagogo::Error::ConfigurationError when :consumer_secret is invalid" do
-        expect { Viagogo::Client.new(:consumer_secret => [3, 'A']) }.to raise_error Viagogo::Error::ConfigurationError
+        expect { Viagogo::Client.new(:consumer_secret => [3, 'A']) }.to raise_error Viagogo::ConfigurationError
       end
 
       it "raises Viagogo::Error::ConfigurationError when :access_token is invalid" do
-        expect { Viagogo::Client.new(:access_token => [3, 'A']) }.to raise_error Viagogo::Error::ConfigurationError
+        expect { Viagogo::Client.new(:access_token => [3, 'A']) }.to raise_error Viagogo::ConfigurationError
       end
 
       it "raises Viagogo::Error::ConfigurationError when :access_token_secret is invalid" do
-        expect { Viagogo::Client.new(:access_token_secret => [3, 'A']) }.to raise_error Viagogo::Error::ConfigurationError
+        expect { Viagogo::Client.new(:access_token_secret => [3, 'A']) }.to raise_error Viagogo::ConfigurationError
       end
 
       it "raises Viagogo::Error::ConfigurationError when :scope is invalid" do
-        expect { Viagogo::Client.new(:scope => [3, 'A']) }.to raise_error Viagogo::Error::ConfigurationError
+        expect { Viagogo::Client.new(:scope => [3, 'A']) }.to raise_error Viagogo::ConfigurationError
       end
     end
 
@@ -82,31 +82,31 @@ describe Viagogo::Client do
       it "raises Viagogo::Error::ConfigurationError when :consumer_key is invalid" do
         expect { Viagogo::Client.new do |config|
           config.consumer_key = 50
-        end }.to raise_error Viagogo::Error::ConfigurationError
+        end }.to raise_error Viagogo::ConfigurationError
       end
 
       it "raises Viagogo::Error::ConfigurationError when :consumer_secret is invalid" do
         expect { Viagogo::Client.new do |config|
           config.consumer_secret = 6
-        end }.to raise_error Viagogo::Error::ConfigurationError
+        end }.to raise_error Viagogo::ConfigurationError
       end
 
       it "raises Viagogo::Error::ConfigurationError when :access_token is invalid" do
         expect { Viagogo::Client.new do |config|
           config.access_token = 50
-        end }.to raise_error Viagogo::Error::ConfigurationError
+        end }.to raise_error Viagogo::ConfigurationError
       end
 
       it "raises Viagogo::Error::ConfigurationError when :access_token_secret is invalid" do
         expect { Viagogo::Client.new do |config|
           config.access_token_secret = 50
-        end }.to raise_error Viagogo::Error::ConfigurationError
+        end }.to raise_error Viagogo::ConfigurationError
       end
 
       it "raises Viagogo::Error::ConfigurationError when :scope is invalid" do
         expect { Viagogo::Client.new do |config|
           config.scope = 50
-        end }.to raise_error Viagogo::Error::ConfigurationError
+        end }.to raise_error Viagogo::ConfigurationError
       end
     end
   end

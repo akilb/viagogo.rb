@@ -1,8 +1,9 @@
 require 'faraday'
 require 'faraday_middleware'
-require 'viagogo/error/configuration_error'
+require 'viagogo/error'
 require 'viagogo/oauth'
 require 'viagogo/response/follow_redirects'
+require 'viagogo/response/raise_error'
 require 'viagogo/version'
 
 module Viagogo
@@ -97,6 +98,8 @@ module Viagogo
         builder.use Faraday::Request::UrlEncoded
         # Automatically follow 301, 302 and 307 redirects
         builder.use Viagogo::Response::FollowRedirects
+        # Handle error responses
+        builder.use Viagogo::Response::RaiseError
 
         # Set Faraday's HTTP adapter
         builder.adapter Faraday.default_adapter
@@ -152,7 +155,7 @@ module Viagogo
     def validate_credential_type!
       credentials.merge({ :scope => scope }).each do |credential, value|
         next if value.nil? || value.is_a?(String) || value.is_a?(Symbol)
-        fail(Error::ConfigurationError,
+        fail(ConfigurationError,
              "Invalid #{credential} specified: #{value.inspect} must be a string or symbol.")
       end
     end
