@@ -2,6 +2,7 @@ require 'faraday'
 require 'faraday_middleware'
 require 'viagogo/error/configuration_error'
 require 'viagogo/oauth'
+require 'viagogo/response/follow_redirects'
 require 'viagogo/version'
 
 module Viagogo
@@ -95,7 +96,7 @@ module Viagogo
         # Convert request params to "www-form-urlencoded"
         builder.use Faraday::Request::UrlEncoded
         # Automatically follow 301, 302 and 307 redirects
-        builder.use FaradayMiddleware::FollowRedirects
+        builder.use Viagogo::Response::FollowRedirects
 
         # Set Faraday's HTTP adapter
         builder.adapter Faraday.default_adapter
