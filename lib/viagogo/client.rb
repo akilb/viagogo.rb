@@ -90,10 +90,8 @@ module Viagogo
     # @return [Faraday::Builder]
     def middleware
       @middleware ||= Faraday::Builder.new do |builder|
-        # TODO include OAuth middleware
         # Signs requests according to the OAuth protocol
-        #builder.use FaradayMiddleware::OAuth
-
+        builder.use FaradayMiddleware::OAuth, credentials
         # Convert request params to "www-form-urlencoded"
         builder.use Faraday::Request::UrlEncoded
         # Automatically follow 301, 302 and 307 redirects
@@ -115,7 +113,7 @@ module Viagogo
           },
           :request => {
               :open_timeout => 5,
-              :timeout => 10,
+              :timeout => 10
           },
       }
     end

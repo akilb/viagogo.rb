@@ -2,10 +2,7 @@ require 'spec_helper'
 
 describe Viagogo::OAuth do
   before do
-    @client = Viagogo::Client.new(:consumer_key => 'CK',
-                                  :consumer_secret => 'CS',
-                                  :access_token => 'AT',
-                                  :access_token_secret => 'AS')
+    @client = Viagogo::Client.new(:consumer_key => 'CK', :consumer_secret => 'CS')
   end
 
   describe "#public_access_token" do
