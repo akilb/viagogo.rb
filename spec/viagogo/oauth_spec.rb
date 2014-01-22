@@ -14,12 +14,6 @@ describe Viagogo::OAuth do
       expect(a_get(expected_path).with(:query => hash_including())).to have_been_made
     end
 
-    it "uses a */* Accept header" do
-      stub_request(:any, /.*/).with(:headers => {:accept => '*/*'})
-      @client.public_access_token
-      expect(a_request(:any, /.*/).with(:headers => {:accept => '*/*'})).to have_been_made
-    end
-
     context "when :scope is supplied" do
       it "passes the :scope as a query parameter" do
         expected_scope = "my scope"

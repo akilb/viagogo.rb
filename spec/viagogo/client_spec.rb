@@ -189,6 +189,13 @@ describe Viagogo::Client do
           expect(a_request(method, Viagogo::Client::API_ENDPOINT + expected_path)).to have_been_made
         end
 
+        it "makes an HTTP request with JSON Content-Type" do
+          expected_content_type = "application/json"
+          stub_request(:any, /.*/).with(:headers => { "Content-Type" => expected_content_type })
+          @client.send(:request, method, "/")
+          expect(a_request(:any, /.*/).with(:headers => { "Content-Type" => expected_content_type })).to have_been_made
+        end
+
         it "returns the response env Hash" do
           expected_response_hash = {:body => "abc"}
           stub_request(:any, Viagogo::Client::API_ENDPOINT + "/foo").to_return(expected_response_hash)

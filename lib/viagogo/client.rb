@@ -94,12 +94,14 @@ module Viagogo
       @middleware ||= Faraday::Builder.new do |builder|
         # Signs requests according to the OAuth protocol
         builder.use FaradayMiddleware::OAuth, credentials
-        # Convert request params to "www-form-urlencoded"
-        builder.use Faraday::Request::UrlEncoded
+        # Encodes request the body as JSON
+        builder.use FaradayMiddleware::EncodeJson
         # Automatically follow 301, 302 and 307 redirects
         builder.use Viagogo::Response::FollowRedirects
         # Handle error responses
         builder.use Viagogo::Response::RaiseError
+        # Parse response JSON
+        builder.use FaradayMiddleware::ParseJson
 
         # Set Faraday's HTTP adapter
         builder.adapter Faraday.default_adapter
@@ -113,6 +115,7 @@ module Viagogo
           :builder => middleware,
           :headers => {
               :accept => 'application/json',
+              :content_type => 'application/json',
               :user_agent => user_agent,
           },
           :request => {
@@ -132,16 +135,12 @@ module Viagogo
     # Perform an HTTP request
     #
     # @return [Hash] object containing response information
-    def request(method, path, params = {}, signature_params = params)
+    def request(method, path, params = {})
       is_token_request = params.delete(:is_token_request)
 
       response = connection.send(method.to_sym, path, params) do |request|
         if !is_token_request and (access_token.nil? or access_token_secret.nil?)
           public_access_token
-        end
-
-        if is_token_request
-          request[:accept] = '*/*'
         end
       end
       response.env
