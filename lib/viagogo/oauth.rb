@@ -4,7 +4,7 @@ require 'viagogo/token'
 module Viagogo
   # OAuth authentication helper methods for [Viagogo::Client]
   module OAuth
-    def public_access_token
+    def public_access_token(scope="API.Public")
       response = get("/Public/SimpleOAuthAccessRequest",
                      {:scope => scope, :is_token_request => true, :raw => true})
 

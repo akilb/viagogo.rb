@@ -13,8 +13,7 @@ module Viagogo
     attr_accessor :access_token,
                   :access_token_secret,
                   :consumer_key,
-                  :consumer_secret,
-                  :scope
+                  :consumer_secret
     include Viagogo::OAuth
     include Viagogo::Connection
 
@@ -32,8 +31,6 @@ module Viagogo
         send(:"#{key}=", value)
       end
       yield self if block_given?
-
-      @scope ||= "API.Public"
 
       validate_credential_type!
     end
@@ -107,7 +104,7 @@ module Viagogo
     # @raise [Viagogo::Error::ConfigurationError] Error is raised when
     #   supplied viagogo credentials are not a String or Symbol.
     def validate_credential_type!
-      credentials.merge({ :scope => scope }).each do |credential, value|
+      credentials.each do |credential, value|
         next if value.nil? || value.is_a?(String) || value.is_a?(Symbol)
         fail(ConfigurationError,
              "Invalid #{credential} specified: #{value.inspect} must be a string or symbol.")

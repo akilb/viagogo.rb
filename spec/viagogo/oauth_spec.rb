@@ -18,7 +18,7 @@ describe Viagogo::OAuth do
       it "passes the :scope as a query parameter" do
         expected_scope = "my scope"
         stub_request(:any, /.*/).with(:query => {"scope" => expected_scope})
-        Viagogo::Client.new(:scope => expected_scope).public_access_token
+        @client.public_access_token(expected_scope)
         expect(a_request(:any, /.*/).with(:query => {"scope" => expected_scope})).to have_been_made
       end
     end
@@ -41,7 +41,7 @@ describe Viagogo::OAuth do
     it "returns Viagogo::Token with given scope" do
       expected_scope = "my scope"
       stub_request(:any, /.*/)
-      access_token = Viagogo::Client.new(:scope => expected_scope).public_access_token
+      access_token = @client.public_access_token(expected_scope)
       expect(access_token.scope).to eq(expected_scope)
     end
 
