@@ -161,7 +161,7 @@ shared_examples_for "a Client" do
         it "returns the response env Hash" do
           expected_response_hash = {:body => "abc"}
           stub_request(:any, Viagogo::Client::API_ENDPOINT + "/foo").to_return(expected_response_hash)
-          actual_response_hash = client.send(:request, method, "/foo", :raw => true)
+          actual_response_hash = client.send(:request, method, "/foo", :is_token_request => true)
           expect(actual_response_hash[:body]).to eq(expected_response_hash[:body])
         end
       end

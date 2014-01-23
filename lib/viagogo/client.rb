@@ -1,7 +1,6 @@
 require 'faraday'
 require 'viagogo/connection'
 require 'viagogo/error'
-require 'viagogo/oauth'
 require 'viagogo/version'
 
 module Viagogo
@@ -14,7 +13,6 @@ module Viagogo
                   :access_token_secret,
                   :consumer_key,
                   :consumer_secret
-    include Viagogo::OAuth
     include Viagogo::Connection
 
     # TODO: Use SSL
@@ -87,15 +85,8 @@ module Viagogo
     # @return [Hash] object containing response information
     def request(method, path, params = {})
       is_token_request = params.delete(:is_token_request)
-      raw = params.delete(:raw)
 
-      connection = connection(API_ENDPOINT, raw || false)
-      response = connection.send(method.to_sym, path, params) do |request|
-        if !is_token_request and (access_token.nil? or access_token_secret.nil?)
-          public_access_token
-        end
-      end
-      response.env
+      connection(API_ENDPOINT, is_token_request || false).send(method.to_sym, path, params).env
     end
 
     # Ensures that all credentials set during configuration are of a

@@ -22,10 +22,13 @@ module Viagogo
       }
     end
 
-    def connection(endpoint, raw=false)
+    def connection(endpoint, is_token_request=false)
       Faraday::Connection.new(endpoint, connection_options) do |builder|
+        request_credentials = credentials.clone.delete_if do |k,v|
+          k == :token || k == :token_secret if is_token_request
+        end
         # Signs requests according to the OAuth protocol
-        builder.use FaradayMiddleware::OAuth, credentials
+        builder.use FaradayMiddleware::OAuth, request_credentials
         # Encodes request the body as JSON
         builder.use FaradayMiddleware::EncodeJson
         # Automatically follow 301, 302 and 307 redirects
@@ -33,9 +36,9 @@ module Viagogo
         # Handle error responses
         builder.use Viagogo::Response::RaiseError
         # Convert CamelCase JSON keys to under_score
-        builder.use Viagogo::Response::UnderscorifyHash unless raw
+        builder.use Viagogo::Response::UnderscorifyHash unless is_token_request
         # Parse response JSON
-        builder.use FaradayMiddleware::ParseJson unless raw
+        builder.use FaradayMiddleware::ParseJson unless is_token_request
 
         # Set Faraday's HTTP adapter
         builder.adapter Faraday.default_adapter
