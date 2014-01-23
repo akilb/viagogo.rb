@@ -5,7 +5,8 @@ module Viagogo
   # OAuth authentication helper methods for [Viagogo::Client]
   module OAuth
     def public_access_token
-      response = get("/Public/SimpleOAuthAccessRequest", {:scope => scope, :is_token_request => true})
+      response = get("/Public/SimpleOAuthAccessRequest",
+                     {:scope => scope, :is_token_request => true, :raw => true})
 
       utcNowTime = Time.now.utc
       tokenAndSecret = CGI.parse(response[:body] || "")

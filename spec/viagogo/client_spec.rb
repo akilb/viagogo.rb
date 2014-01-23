@@ -157,28 +157,6 @@ describe Viagogo::Client do
     end
   end
 
-  describe "#connection" do
-    it "looks like a Faraday connection" do
-      expect(@client.send(:connection)).to respond_to(:run_request)
-    end
-
-    it "caches the connection" do
-      connection1, connection2 = @client.send(:connection), @client.send(:connection)
-      expect(connection1.object_id).to eq(connection2.object_id)
-    end
-  end
-
-  describe "#middleware" do
-    it "is a Faraday builder" do
-      expect(@client.middleware).to be_an_instance_of(Faraday::Builder)
-    end
-
-    it "caches the middleware" do
-      middleware1, middleware2 = @client.middleware, @client.middleware
-      expect(middleware1.object_id).to eq(middleware2.object_id)
-    end
-  end
-
   describe "#request" do
     [:get, :post, :head, :put, :delete, :patch].each do |method|
       context "when HTTP method is #{method}" do
@@ -199,7 +177,7 @@ describe Viagogo::Client do
         it "returns the response env Hash" do
           expected_response_hash = {:body => "abc"}
           stub_request(:any, Viagogo::Client::API_ENDPOINT + "/foo").to_return(expected_response_hash)
-          actual_response_hash = @client.send(:request, method, "/foo")
+          actual_response_hash = @client.send(:request, method, "/foo", :raw => true)
           expect(actual_response_hash[:body]).to eq(expected_response_hash[:body])
         end
       end
