@@ -2,6 +2,7 @@ require 'faraday'
 require 'faraday_middleware'
 require 'viagogo/response/follow_redirects'
 require 'viagogo/response/raise_error'
+require 'viagogo/response/underscorify_hash'
 
 module Viagogo
   module Connection
@@ -31,6 +32,8 @@ module Viagogo
         builder.use Viagogo::Response::FollowRedirects
         # Handle error responses
         builder.use Viagogo::Response::RaiseError
+        # Convert CamelCase JSON keys to under_score
+        builder.use Viagogo::Response::UnderscorifyHash unless raw
         # Parse response JSON
         builder.use FaradayMiddleware::ParseJson unless raw
 
