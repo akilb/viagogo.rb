@@ -2,6 +2,8 @@ require 'ostruct'
 require 'representable/json'
 require 'viagogo/country'
 require 'viagogo/geography'
+require 'viagogo/metro_area'
+require 'viagogo/venue'
 
 module Viagogo
   class Page < OpenStruct
@@ -30,5 +32,19 @@ module Viagogo
     include Viagogo::PageRepresenter
 
     collection :results, as: :Results, extend: Viagogo::GeographyRepresenter, class: Viagogo::Geography
+  end
+
+  module MetroAreaPageRepresenter
+    include Representable::JSON
+    include Viagogo::PageRepresenter
+
+    collection :results, as: :Results, extend: Viagogo::MetroAreaRepresenter, class: Viagogo::MetroArea
+  end
+
+  module VenuePageRepresenter
+    include Representable::JSON
+    include Viagogo::PageRepresenter
+
+    collection :results, as: :Results, extend: Viagogo::VenueRepresenter, class: Viagogo::Venue
   end
 end

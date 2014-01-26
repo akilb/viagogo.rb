@@ -1,6 +1,8 @@
 require 'viagogo/client'
 require 'viagogo/public/api/countries'
 require 'viagogo/public/api/geographies'
+require 'viagogo/public/api/metro_areas'
+require 'viagogo/public/api/venues'
 require 'viagogo/public/oauth'
 
 module Viagogo
@@ -11,6 +13,8 @@ module Viagogo
     class Client < Viagogo::Client
       include Viagogo::Public::API::Countries
       include Viagogo::Public::API::Geographies
+      include Viagogo::Public::API::MetroAreas
+      include Viagogo::Public::API::Venues
       include Viagogo::Public::OAuth
     end
   end
