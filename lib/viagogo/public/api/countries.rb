@@ -1,4 +1,5 @@
 require 'viagogo/country'
+require 'viagogo/page'
 require 'viagogo/utils'
 
 module Viagogo
@@ -12,6 +13,14 @@ module Viagogo
                                Viagogo::CountryRepresenter,
                                :get,
                                "/Public/Country/#{code}",
+                               params)
+        end
+
+        def countries(params={})
+          object_from_response(Viagogo::Page,
+                               Viagogo::CountryPageRepresenter,
+                               :get,
+                               "/Public/Country/All",
                                params)
         end
       end

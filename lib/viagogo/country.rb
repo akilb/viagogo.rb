@@ -1,6 +1,6 @@
 require 'ostruct'
 require 'representable/json'
-require 'viagogo/geography'
+require 'viagogo/resource'
 
 module Viagogo
   class Country < OpenStruct
@@ -11,6 +11,6 @@ module Viagogo
 
     property :code, as: :Code
     property :name, as: :Name
-    property :geography, as: :Geography, extend: GeographyRepresenter, class: Geography
+    property :geography, as: :Geography, extend: Viagogo::ResourceRepresenter, class: Viagogo::Resource
   end
 end
