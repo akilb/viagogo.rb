@@ -6,7 +6,7 @@ module Viagogo
                              path,
                              options = {})
       response = send(request_method.to_sym, path, options)
-      klass.new.extend(klass_representer).from_json(response[:body])
+      response[:status] == 200 ? klass.new.extend(klass_representer).from_json(response[:body] || "") : nil
     end
   end
 end

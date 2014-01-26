@@ -1,7 +1,9 @@
 require 'ostruct'
 require 'representable/json'
 require 'viagogo/country'
+require 'viagogo/event'
 require 'viagogo/geography'
+require 'viagogo/listing'
 require 'viagogo/metro_area'
 require 'viagogo/venue'
 
@@ -27,11 +29,25 @@ module Viagogo
     collection :results, as: :Results, extend: Viagogo::CountryRepresenter, class: Viagogo::Country
   end
 
+  module EventPageRepresenter
+    include Representable::JSON
+    include Viagogo::PageRepresenter
+
+    collection :results, as: :Results, extend: Viagogo::EventRepresenter, class: Viagogo::Event
+  end
+
   module GeographyPageRepresenter
     include Representable::JSON
     include Viagogo::PageRepresenter
 
     collection :results, as: :Results, extend: Viagogo::GeographyRepresenter, class: Viagogo::Geography
+  end
+
+  module ListingPageRepresenter
+    include Representable::JSON
+    include Viagogo::PageRepresenter
+
+    collection :results, as: :Results, extend: Viagogo::ListingRepresenter, class: Viagogo::Listing
   end
 
   module MetroAreaPageRepresenter
