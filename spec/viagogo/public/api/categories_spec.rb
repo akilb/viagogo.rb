@@ -26,7 +26,7 @@ describe Viagogo::Public::API::Categories do
     end
 
     it "returns Viagogo::Category created from the response" do
-      stub_get("/Public/Category/1").to_return({:body => "{\"Id\": 5 \"Parents\": []}"})
+      stub_get("/Public/Category/1").to_return({:body => "{\"Id\": 5, \"Parents\": []}"})
       expect(@client.category 1).to be_an_instance_of(Viagogo::Category)
     end
   end
