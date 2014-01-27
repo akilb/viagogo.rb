@@ -4,13 +4,13 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'viagogo/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "viagogo"
+  spec.name          = "viagogo-client"
   spec.version       = Viagogo::VERSION
   spec.authors       = ["Akil Burgess"]
   spec.email         = ["akilburgess@gmail.com"]
   spec.summary       = %q{Ruby toolkit for working with the viagogo API}
   spec.description   = spec.summary
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/akilb/viagogo.rb"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)

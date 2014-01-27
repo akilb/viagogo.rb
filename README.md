@@ -6,7 +6,7 @@ Ruby toolkit for working with the viagogo API
 
 Add this line to your application's Gemfile:
 
-    gem 'viagogo'
+    gem 'viagogo-client'
 
 And then execute:
 
@@ -14,7 +14,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install viagogo
+    $ gem install viagogo-client
 
 ## Usage
 
