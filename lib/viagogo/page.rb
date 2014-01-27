@@ -1,5 +1,6 @@
 require 'ostruct'
 require 'representable/json'
+require 'viagogo/category'
 require 'viagogo/country'
 require 'viagogo/event'
 require 'viagogo/geography'
@@ -20,6 +21,13 @@ module Viagogo
     property :current_page, as: :Currentpage
     property :page_size, as: :PageSize
     #TODO DeletedItems
+  end
+
+  module CategoryPageRepresenter
+    include Representable::JSON
+    include Viagogo::PageRepresenter
+
+    collection :results, as: :Results, extend: Viagogo::CategoryRepresenter, class: Viagogo::Category
   end
 
   module CountryPageRepresenter
