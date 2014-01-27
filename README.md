@@ -1,4 +1,4 @@
-# Viagogo
+# The viagogo Ruby Gem
 
 Ruby toolkit for working with the viagogo API
 
@@ -17,8 +17,26 @@ Or install it yourself as:
     $ gem install viagogo-client
 
 ## Usage
+```ruby
+require 'viagogo-client'
 
-TODO: Write usage instructions here
+# All methods require authentication. To get your viagogo OAuth credentials,
+# see http://developer.viagogo.net/firststeps
+client = Viagogo::Public::Client do |config|
+  config.consumer_key = YOUR_CONSUMER_KEY
+  config.consumer_secret = YOUR_CONSUMER_SECRET
+end
+
+token = client.get_access_token
+client.access_token = token.oauth_token
+client.access_token_secret = token.oauth_token_secret
+
+# Get a list of events that match the given search query
+events = client.events_search "FC Barcelona tickets"
+
+# Pass query parameters as a hash of options
+events = clients.events_search "FC Barcelona tickets", :page => 2
+```
 
 ## Contributing
 
