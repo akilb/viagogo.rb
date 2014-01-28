@@ -1,5 +1,15 @@
 # The viagogo Ruby Gem
 
+[![Gem Version](https://badge.fury.io/rb/viagogo-client.png)][gem]
+[![Build Status](https://secure.travis-ci.org/akilb/viagogo.rb.png?branch=master)][travis]
+[![Dependency Status](https://gemnasium.com/akilb/viagogo.rb.png)][gemnasium]
+[![Code Climate](https://codeclimate.com/github/akilb/viagogo.rb.png)][codeclimate]
+
+[gem]: http://rubygems.org/gems/viagogo-client
+[travis]: http://travis-ci.org/akilb/viagogo.rb
+[gemnasium]: https://gemnasium.com/akilb/viagogo.rb
+[codeclimate]: https://codeclimate.com/github/akilb/viagogo.rb
+
 Ruby toolkit for working with the viagogo API
 
 ## Installation
