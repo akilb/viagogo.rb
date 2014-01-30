@@ -26,7 +26,7 @@ describe Viagogo::Public::API::Venues do
     end
 
     it "returns Viagogo::Venue created from the response" do
-      stub_get("/Public/Venue/1").to_return({:body => "{\"Id\": 5}"})
+      stub_get("/Public/Venue/1").to_return({:body => fixture("venue.json")})
       expect(@client.venue 1).to be_an_instance_of(Viagogo::Venue)
     end
   end
@@ -47,7 +47,7 @@ describe Viagogo::Public::API::Venues do
     end
 
     it "returns Viagogo::Page created from the response" do
-      stub_request(:any, /.*/).to_return(:body => "{}")
+      stub_request(:any, /.*/).to_return(:body => fixture("venues.json"))
       expect(@client.venues_by_metro_area 20).to be_an_instance_of(Viagogo::Page)
     end
   end

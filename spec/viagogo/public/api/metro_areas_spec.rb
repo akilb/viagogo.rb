@@ -26,7 +26,7 @@ describe Viagogo::Public::API::MetroAreas do
     end
 
     it "returns Viagogo::MetroArea created from the response" do
-      stub_get("/Public/MetroArea/1").to_return({:body => "{\"Id\": 5}"})
+      stub_get("/Public/MetroArea/1").to_return({:body => fixture("metro_area.json")})
       expect(@client.metro_area 1).to be_an_instance_of(Viagogo::MetroArea)
     end
   end
@@ -47,7 +47,7 @@ describe Viagogo::Public::API::MetroAreas do
     end
 
     it "returns Viagogo::Page created from the response" do
-      stub_get("/Public/MetroArea/All").to_return({:body => "{}"})
+      stub_get("/Public/MetroArea/All").to_return({:body => fixture("metro_areas.json")})
       expect(@client.metro_areas).to be_an_instance_of(Viagogo::Page)
     end
   end

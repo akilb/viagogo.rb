@@ -26,7 +26,7 @@ describe Viagogo::Public::API::Categories do
     end
 
     it "returns Viagogo::Category created from the response" do
-      stub_get("/Public/Category/1").to_return({:body => "{\"Id\": 5, \"Parents\": []}"})
+      stub_get("/Public/Category/1").to_return({:body => fixture("category.json")})
       expect(@client.category 1).to be_an_instance_of(Viagogo::Category)
     end
   end
@@ -47,7 +47,7 @@ describe Viagogo::Public::API::Categories do
     end
 
     it "returns Viagogo::Page created from the response" do
-      stub_request(:any, /.*/).to_return(:body => "{}")
+      stub_request(:any, /.*/).to_return(:body => fixture("categories.json"))
       expect(@client.categories_top "GB").to be_an_instance_of(Viagogo::Page)
     end
   end
@@ -68,7 +68,7 @@ describe Viagogo::Public::API::Categories do
     end
 
     it "returns Viagogo::Page created from the response" do
-      stub_request(:any, /.*/).to_return(:body => "{}")
+      stub_request(:any, /.*/).to_return(:body => fixture("categories.json"))
       expect(@client.categories_parents "GB", 0).to be_an_instance_of(Viagogo::Page)
     end
   end
@@ -89,7 +89,7 @@ describe Viagogo::Public::API::Categories do
     end
 
     it "returns Viagogo::Page created from the response" do
-      stub_request(:any, /.*/).to_return(:body => "{}")
+      stub_request(:any, /.*/).to_return(:body => fixture("categories.json"))
       expect(@client.categories_children "GB", 0).to be_an_instance_of(Viagogo::Page)
     end
   end

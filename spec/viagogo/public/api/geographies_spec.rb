@@ -26,7 +26,7 @@ describe Viagogo::Public::API::Geographies do
     end
 
     it "returns Viagogo::Geography created from the response" do
-      stub_get("/Public/Geography/1").to_return({:body => "{\"Id\": 5}"})
+      stub_get("/Public/Geography/1").to_return({:body => fixture("geography.json")})
       expect(@client.geography 1).to be_an_instance_of(Viagogo::Geography)
     end
   end
@@ -47,7 +47,7 @@ describe Viagogo::Public::API::Geographies do
     end
 
     it "returns Viagogo::Page created from the response" do
-      stub_get("/Public/Geography/All").to_return({:body => "{}"})
+      stub_get("/Public/Geography/All").to_return({:body => fixture("geographies.json")})
       expect(@client.geographies).to be_an_instance_of(Viagogo::Page)
     end
   end

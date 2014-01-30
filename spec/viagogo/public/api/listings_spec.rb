@@ -26,7 +26,7 @@ describe Viagogo::Public::API::Listings do
     end
 
     it "returns Viagogo::Listing created from the response" do
-      stub_get("/Public/Listing/1").to_return({:body => "{\"Id\": 5}"})
+      stub_get("/Public/Listing/1").to_return({:body => fixture("listing.json")})
       expect(@client.listing 1).to be_an_instance_of(Viagogo::Listing)
     end
   end
@@ -47,7 +47,7 @@ describe Viagogo::Public::API::Listings do
     end
 
     it "returns Viagogo::Page created from the response" do
-      stub_request(:any, /.*/).to_return(:body => "{}")
+      stub_request(:any, /.*/).to_return(:body => fixture("listings.json"))
       expect(@client.listings_by_event 20).to be_an_instance_of(Viagogo::Page)
     end
   end

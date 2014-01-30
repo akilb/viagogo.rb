@@ -26,7 +26,7 @@ describe Viagogo::Public::API::Countries do
     end
 
     it "returns Viagogo::Country created from the response" do
-      stub_get("/Public/Country/GB").to_return({:body => "{\"name\":\"GB\"}"})
+      stub_get("/Public/Country/GB").to_return({:body => fixture("country.json")})
       expect(@client.country "GB").to be_an_instance_of(Viagogo::Country)
     end
   end
@@ -47,7 +47,7 @@ describe Viagogo::Public::API::Countries do
     end
 
     it "returns Viagogo::Page created from the response" do
-      stub_get("/Public/Country/All").to_return({:body => "{}"})
+      stub_get("/Public/Country/All").to_return({:body => fixture("countries.json")})
       expect(@client.countries).to be_an_instance_of(Viagogo::Page)
     end
   end

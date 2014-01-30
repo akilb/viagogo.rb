@@ -40,3 +40,11 @@ end
 def stub_put(path)
   stub_request(:put, Viagogo::Client::API_ENDPOINT + path)
 end
+
+def fixture_path
+  File.expand_path('../fixtures', __FILE__)
+end
+
+def fixture(file)
+  File.new(fixture_path + '/' + file)
+end

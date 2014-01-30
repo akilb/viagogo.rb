@@ -26,7 +26,7 @@ describe Viagogo::Public::API::Events do
     end
 
     it "returns Viagogo::Event created from the response" do
-      stub_get("/Public/Event/1").to_return({:body => "{\"Id\": 5}"})
+      stub_get("/Public/Event/1").to_return({:body => fixture("event.json")})
       expect(@client.event 1).to be_an_instance_of(Viagogo::Event)
     end
   end
@@ -47,7 +47,7 @@ describe Viagogo::Public::API::Events do
     end
 
     it "returns Viagogo::Page created from the response" do
-      stub_request(:any, /.*/).to_return(:body => "{}")
+      stub_request(:any, /.*/).to_return(:body => fixture("events.json"))
       expect(@client.events_by_category 20).to be_an_instance_of(Viagogo::Page)
     end
   end
@@ -68,7 +68,7 @@ describe Viagogo::Public::API::Events do
     end
 
     it "returns Viagogo::Page created from the response" do
-      stub_request(:any, /.*/).to_return(:body => "{}")
+      stub_request(:any, /.*/).to_return(:body => fixture("events.json"))
       expect(@client.events_by_metro_area 20).to be_an_instance_of(Viagogo::Page)
     end
   end
@@ -89,7 +89,7 @@ describe Viagogo::Public::API::Events do
     end
 
     it "returns Viagogo::Page created from the response" do
-      stub_request(:any, /.*/).to_return(:body => "{}")
+      stub_request(:any, /.*/).to_return(:body => fixture("events.json"))
       expect(@client.events_by_venue 20).to be_an_instance_of(Viagogo::Page)
     end
   end
@@ -110,7 +110,7 @@ describe Viagogo::Public::API::Events do
     end
 
     it "returns Viagogo::Page created from the response" do
-      stub_request(:any, /.*/).to_return(:body => "{}")
+      stub_request(:any, /.*/).to_return(:body => fixture("events.json"))
       expect(@client.events_by_utc_start_date 2011, 11, 11).to be_an_instance_of(Viagogo::Page)
     end
   end
@@ -131,7 +131,7 @@ describe Viagogo::Public::API::Events do
     end
 
     it "returns Viagogo::Page created from the response" do
-      stub_request(:any, /.*/).to_return(:body => "{}")
+      stub_request(:any, /.*/).to_return(:body => fixture("events.json"))
       expect(@client.events_search "foo").to be_an_instance_of(Viagogo::Page)
     end
   end
