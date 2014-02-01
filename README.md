@@ -4,11 +4,13 @@
 [![Build Status](https://secure.travis-ci.org/akilb/viagogo.rb.png?branch=master)][travis]
 [![Dependency Status](https://gemnasium.com/akilb/viagogo.rb.png)][gemnasium]
 [![Code Climate](https://codeclimate.com/github/akilb/viagogo.rb.png)][codeclimate]
+[![Coverage Status](https://coveralls.io/repos/akilb/viagogo.rb/badge.png)][coveralls]
 
 [gem]: http://rubygems.org/gems/viagogo-client
 [travis]: http://travis-ci.org/akilb/viagogo.rb
 [gemnasium]: https://gemnasium.com/akilb/viagogo.rb
 [codeclimate]: https://codeclimate.com/github/akilb/viagogo.rb
+[coveralls]: https://coveralls.io/r/akilb/viagogo.rb
 
 Ruby toolkit for working with the viagogo API
 
