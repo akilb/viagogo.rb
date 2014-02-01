@@ -2,6 +2,7 @@ require 'ostruct'
 require 'representable/json'
 require 'viagogo/site_url'
 require 'viagogo/resource'
+require 'viagogo/utils'
 
 module Viagogo
   class Event < OpenStruct
@@ -12,10 +13,18 @@ module Viagogo
 
     property :id, as: :Id
     property :name, as: :Name
-    property :start_datetime_utc, as: :StartDateTimeUtc #TODO Convert to DateTime
-    property :end_datetime_utc, as: :EndDateTimeUtc #TODO Convert to DateTime
-    property :start_datetime_local, as: :StartDateTimeLocal #TODO Convert to DateTime
-    property :end_datetime_local, as: :EndDateTimeUtc #TODO Convert to DateTime
+    property :start_datetime_utc,
+             as: :StartDateTimeUtc,
+             setter: lambda { |val, args| self.start_datetime_utc = Viagogo::Utils::parse_microsoft_json_date(val) }
+    property :end_datetime_utc,
+             as: :EndDateTimeUtc,
+             setter: lambda { |val, args| self.end_datetime_utc = Viagogo::Utils::parse_microsoft_json_date(val) }
+    property :start_datetime_local,
+             as: :StartDateTimeLocal,
+             setter: lambda { |val, args| self.start_datetime_local = Viagogo::Utils::parse_microsoft_json_date(val) }
+    property :end_datetime_local,
+             as: :EndDateTimeLocal,
+             setter: lambda { |val, args| self.end_datetime_local = Viagogo::Utils::parse_microsoft_json_date(val) }
     property :total_listings, as: :TotalListings
     property :total_available_tickets, as: :TotalAvailableTickets
     property :minimum_price, as: :MinimumPrice
