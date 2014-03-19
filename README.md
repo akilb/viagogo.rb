@@ -34,7 +34,7 @@ require 'viagogo-client'
 
 # All methods require authentication. To get your viagogo OAuth credentials,
 # see http://developer.viagogo.net/firststeps
-client = Viagogo::Public::Client do |config|
+client = Viagogo::Public::Client.new do |config|
   config.consumer_key = YOUR_CONSUMER_KEY
   config.consumer_secret = YOUR_CONSUMER_SECRET
 end
